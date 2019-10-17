@@ -1,6 +1,6 @@
-<table mat-table [dataSource]="initData" class="mat-elevation-z8">
+<table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
   <ng-container matColumnDef="date">
-    <th mat-header-cell *matHeaderCellDef>Date</th>
+    <th mat-header-cell mat-sort-header *matHeaderCellDef>Date</th>
     <td mat-cell *matCellDef="let element"> {{element.date | date}} </td>
   </ng-container>
 
@@ -24,43 +24,49 @@
     <td mat-cell *matCellDef="let element"> {{element.distance}} </td>
   </ng-container>
 
+  <ng-container matColumnDef="controls">
+    <th mat-header-cell *matHeaderCellDef>Action</th>
+    <td mat-cell *matCellDef="let element">
+      <button mat-raised-button color="primary">delete</button>
+    </td>
+  </ng-container>
+
   <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
   <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
 </table>
 
-<form class="entry-form">
-  <table class="mat-elevation-z8">
-    <tr>
-      <td>
-        <mat-form-field class="entry-field">
-          <input matInput placeholder="Date" value="{{today | date}}">
-        </mat-form-field>
-      </td>
-      <td>
-        <mat-form-field class="entry-field">
-          <input matInput placeholder="Duration" value="9">
-        </mat-form-field>
-      </td>
-      <td>
-        <mat-form-field class="entry-field">
-          <input matInput placeholder="Category" value="Customer">
-        </mat-form-field>
-      </td>
-      <td>
-        <mat-form-field class="entry-field">
-          <input matInput placeholder="Category" value="Customer">
-        </mat-form-field>
-      </td>
-      <td>
-        <mat-form-field class="entry-field">
-          <input matInput placeholder="Detail" value="German Railways">
-        </mat-form-field>
-      </td>
-      <td>
-        <mat-form-field class="entry-field">
-          <input matInput placeholder="Distance" value="42">
-        </mat-form-field>
-      </td>
-    </tr>
-  </table>
-</form>
+<table class="mat-elevation-z8">
+  <tr>
+    <td>
+      <mat-form-field class="entry-field">
+        <input matInput placeholder="Date" type="date" value="{{today | date:'yyyy-MM-dd'}}" #date>
+      </mat-form-field>
+    </td>
+    <td>
+      <mat-form-field class="entry-field">
+        <input matInput placeholder="Duration" type="number" value="9" #duration>
+      </mat-form-field>
+    </td>
+    <td>
+      <mat-form-field class="entry-field">
+        <input matInput placeholder="Category" type="text" value="Customer" #category>
+      </mat-form-field>
+    </td>
+    <td>
+      <mat-form-field class="entry-field">
+        <input matInput placeholder="Detail" type="text" value="German Railways" #detail>
+      </mat-form-field>
+    </td>
+    <td>
+      <mat-form-field class="entry-field">
+        <input matInput placeholder="Distance" type="number" value="42" #distance>
+      </mat-form-field>
+    </td>
+    <td>
+      <button
+        mat-raised-button
+        color="accent"
+        (click)="addToTable(date.valueAsDate, duration.valueAsNumber, category.value, detail.value, distance.valueAsNumber)">add</button>
+    </td>
+  </tr>
+</table>
