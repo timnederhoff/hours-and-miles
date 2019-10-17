@@ -73,4 +73,15 @@ export class AppComponent implements OnInit {
   deleteRowData(entry: Entry){
     this.dataSource.data = this.dataSource.data.filter(obj => obj != entry);
   }
+
+  readData(event: any) {
+    const fileReader = new FileReader();
+    fileReader.readAsText(event.target.files[0], "UTF-8");
+    fileReader.onload = () => {
+      console.log(JSON.parse(fileReader.result));
+    };
+    fileReader.onerror = (error) => {
+      console.log(error);
+    };
+  }
 }
