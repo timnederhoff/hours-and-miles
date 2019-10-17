@@ -13,7 +13,7 @@ interface Entry {
 
 const INIT_DATA: Entry[] = [
   {
-    date: new Date('11-1-2012'),
+    date: new Date('05-06-2015'),
     duration: 9,
     category: 'Customer',
     detail: 'German Railways',
@@ -29,8 +29,8 @@ const INIT_DATA: Entry[] = [
   {
     date: new Date('02-03-2011'),
     duration: 3,
-    category: 'Free',
-    detail: 'Festival',
+    category: 'Sick',
+    detail: 'fever',
     distance: 3
   }
 ];
@@ -60,13 +60,17 @@ export class AppComponent implements OnInit {
       detail: detail,
       distance: distance
     });
-    this.dataSource.filter ='';
-    this.table.renderRows();
+    // to update table:
+    this.dataSource.filter = '';
     console.log('dataSource:', this.dataSource.data)
   }
 
   ngOnInit(): void {
     this.sort.sort(<MatSortable>{id: 'date', start: 'asc'});
     this.dataSource.sort = this.sort;
+  }
+
+  deleteRowData(entry: Entry){
+    this.dataSource.data = this.dataSource.data.filter(obj => obj != entry);
   }
 }
