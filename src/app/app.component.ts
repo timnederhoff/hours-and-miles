@@ -78,10 +78,24 @@ export class AppComponent implements OnInit {
     const fileReader = new FileReader();
     fileReader.readAsText(event.target.files[0], "UTF-8");
     fileReader.onload = () => {
-      console.log(JSON.parse(fileReader.result));
+      this.dataSource.data = this.parseMilesAndHours(JSON.parse(fileReader.result));
     };
     fileReader.onerror = (error) => {
       console.log(error);
     };
+  }
+
+  private parseMilesAndHours(raw: any) {
+    const parsed: Entry[] = [];
+    raw.forEach(rawEntry => {
+      parsed.push({
+        date: new Date(rawEntry.date),
+        duration: rawEntry.duration,
+        category: rawEntry.category,
+        detail: rawEntry.detail,
+        distance: rawEntry.distance
+      });
+    });
+    return parsed;
   }
 }
