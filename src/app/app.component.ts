@@ -78,7 +78,9 @@ export class AppComponent implements OnInit {
     const fileReader = new FileReader();
     fileReader.readAsText(event.target.files[0], "UTF-8");
     fileReader.onload = () => {
-      this.dataSource.data = this.parseMilesAndHours(JSON.parse(fileReader.result));
+      if (typeof fileReader.result === 'string') {
+        this.dataSource.data = this.parseMilesAndHours(JSON.parse(fileReader.result));
+      }
     };
     fileReader.onerror = (error) => {
       console.log(error);
