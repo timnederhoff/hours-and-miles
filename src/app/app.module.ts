@@ -10,10 +10,13 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatSortModule } from '@angular/material/sort';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { FormsModule } from '@angular/forms';
+import { MatListModule } from '@angular/material/list';
+import { MonthnamePipe } from './monthname.pipe';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    MonthnamePipe
   ],
   imports: [
     BrowserModule,
@@ -24,7 +27,8 @@ import { FormsModule } from '@angular/forms';
     MatButtonModule,
     MatSortModule,
     MatSidenavModule,
-    FormsModule
+    FormsModule,
+    MatListModule
   ],
   providers: [],
   bootstrap: [AppComponent]

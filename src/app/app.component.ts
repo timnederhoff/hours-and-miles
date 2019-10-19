@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { CdkColumnDef } from '@angular/cdk/table';
 import { MatTable, MatTableDataSource } from '@angular/material/table';
 import { MatSort, MatSortable } from '@angular/material/sort';
+import { DomSanitizer } from '@angular/platform-browser';
 
 interface Entry {
   date: Date;
@@ -48,7 +49,7 @@ export class AppComponent implements OnInit {
   displayedColumns: string[] = ['date', 'duration', 'category', 'detail', 'distance', 'controls'];
   today = Date.now();
 
-  constructor() {
+  constructor(private sanitizer: DomSanitizer) {
     this.dataSource = new MatTableDataSource(INIT_DATA);
   }
 
@@ -99,5 +100,22 @@ export class AppComponent implements OnInit {
       });
     });
     return parsed;
+  }
+
+  getUrl() {
+    const url = 'data:text/json;charset=utf-8,' + encodeURIComponent(JSON.stringify({greet: 'hi me!'}));
+    return this.sanitizer.bypassSecurityTrustUrl(url);
+  }
+
+  getStats() {
+    const reducer = (acc, cur) => {
+      acc[cur.date.getMonth()] = (acc[cur.date.getMonth()] || 0) + cur.duration;
+      return acc;
+    };
+    return this.dataSource.data.reduce(reducer, {});
+  }
+
+  getTotalDuration(): number {
+    return this.dataSource.data.map(o => o.duration).reduce((a, c) => a + c, 0);
   }
 }

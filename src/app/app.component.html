@@ -1,8 +1,24 @@
 <mat-sidenav-container>
   <mat-sidenav class="settings" mode="side" opened>
     <form>
-      <input #file type="file" (change)="readData($event)">
+      <label>Open Data File:</label><input #file type="file" (change)="readData($event)">
     </form>
+    <a href="{{getUrl()}}" download="myfile.json">download</a>
+    <table mat-table [dataSource]="getStats() | keyvalue" class="mat-elevation-z8">
+      <ng-container matColumnDef="month">
+        <th mat-header-cell *matHeaderCellDef>Month</th>
+        <td mat-cell *matCellDef="let month">{{month.key | monthname}}</td>
+        <td mat-footer-cell *matFooterCellDef>Total</td>
+      </ng-container>
+      <ng-container matColumnDef="sum">
+        <th mat-header-cell *matHeaderCellDef>Sum</th>
+        <td mat-cell *matCellDef="let sum">{{sum.value}}</td>
+        <td mat-footer-cell *matFooterCellDef>{{getTotalDuration()}}</td>
+      </ng-container>
+      <tr mat-header-row *matHeaderRowDef="['month', 'sum']"></tr>
+      <tr mat-row *matRowDef="let row; columns: ['month', 'sum'];"></tr>
+      <tr mat-footer-row *matFooterRowDef="['month', 'sum']"></tr>
+    </table>
   </mat-sidenav>
   <mat-sidenav-content>
     <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
