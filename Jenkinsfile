@@ -2,20 +2,18 @@ node('dockerhost') {
 
   def dockerImage;
 
-  docker.image('node').inside() {
-
-    stage('checkout') {
-      checkout scm
-    }
-
-    stage('install') {
-      sh 'npm install'
-    }
-
-    stage('build') {
-      sh 'npm build'
-    }
+  stage('checkout') {
+    checkout scm
   }
+
+  stage('install') {
+    docker.image('node:10.16.3').run('npm install')
+  }
+
+  stage('build') {
+    docker.image('node:10.16.3').run('npm build')
+  }
+
 
   stage('containerize') {
     dockerImage = docker.build("hours-and-miles:$BUILD_NAME")
