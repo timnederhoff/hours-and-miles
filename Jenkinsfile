@@ -13,7 +13,7 @@ node('dockerhost') {
       }
 
       stage('build') {
-        sh 'npm build'
+        sh 'npm run build'
       }
     }
   }
