@@ -26,13 +26,13 @@ node('dockerhost') {
     def containerName = 'hours-and-miles'
     sh "docker stop ${containerName} || true"
     sh "docker wait ${containerName} || true"
+    sh "docker rm -f ${containerName} || true"
 
     def arguments = [
       "--name ${containerName}",
       '-e VIRTUAL_HOST=hours-and-miles.dev.timnederhoff.nl',
       '-e LETSENCRYPT_HOST=hours-and-miles.dev.timnederhoff.nl',
       '--expose 80',
-      '--rm',
       '--restart=always'
     ].join(' ')
     dockerImage.run(arguments)
