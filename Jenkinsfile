@@ -3,6 +3,11 @@ node('dockerhost') {
   def dockerImage;
 
   docker.image('node').inside() {
+
+    stage('checkout') {
+      checkout scm
+    }
+
     stage('install') {
       sh 'npm install'
     }
