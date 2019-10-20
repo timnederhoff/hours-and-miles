@@ -23,8 +23,12 @@ node('dockerhost') {
   }
 
   stage('deploy') {
+    def containerName = 'hours-and-miles'
+    sh "docker stop ${containerName} || true"
+    sh "docker wait ${containerName} || true"
+
     def arguments = [
-      '-v $PWD/dist/hours-and-miles:/usr/share/nginx/html',
+      "--name ${containerName}",
       '-e VIRTUAL_HOST=hours-and-miles.dev.timnederhoff.nl',
       '-e LETSENCRYPT_HOST=hours-and-miles.dev.timnederhoff.nl',
       '--expose 80',
