@@ -3,38 +3,7 @@ import { CdkColumnDef } from '@angular/cdk/table';
 import { MatTable, MatTableDataSource } from '@angular/material/table';
 import { MatSort, MatSortable } from '@angular/material/sort';
 import { DomSanitizer } from '@angular/platform-browser';
-
-interface Entry {
-  date: Date;
-  duration: number;
-  category: string;
-  detail: string;
-  distance: number;
-}
-
-const INIT_DATA: Entry[] = [
-  {
-    date: new Date('05-06-2015'),
-    duration: 9,
-    category: 'Customer',
-    detail: 'German Railways',
-    distance: 42
-  },
-  {
-    date: new Date('11-2-2012'),
-    duration: 3,
-    category: 'Free',
-    detail: 'Festival',
-    distance: 3
-  },
-  {
-    date: new Date('02-03-2011'),
-    duration: 3,
-    category: 'Sick',
-    detail: 'fever',
-    distance: 3
-  }
-];
+import { Entry, HourMileService } from './hour-mile.service';
 
 @Component({
   selector: 'app-root',
@@ -49,21 +18,21 @@ export class AppComponent implements OnInit {
   displayedColumns: string[] = ['date', 'duration', 'category', 'detail', 'distance', 'controls'];
   today = Date.now();
 
-  constructor(private sanitizer: DomSanitizer) {
-    this.dataSource = new MatTableDataSource(INIT_DATA);
+  constructor(private sanitizer: DomSanitizer, private hourMileService: HourMileService) {
+    this.dataSource = new MatTableDataSource<Entry>(hourMileService.getData());
   }
 
-  addToTable(date: Date, duration: number, category: string, detail: string, distance: number) {
-    this.dataSource.data.push({
+  addEntry(date: Date, duration: number, category: string, detail: string, distance: number) {
+    this.hourMileService.addEntry({
       date: date,
       duration: duration,
       category: category,
       detail: detail,
       distance: distance
     });
+    this.dataSource.data = this.hourMileService.getData();
     // to update table:
-    this.dataSource.filter = '';
-    console.log('dataSource:', this.dataSource.data)
+    // this.dataSource.filter = '';
   }
 
   ngOnInit(): void {
@@ -72,7 +41,8 @@ export class AppComponent implements OnInit {
   }
 
   deleteRowData(entry: Entry){
-    this.dataSource.data = this.dataSource.data.filter(obj => obj != entry);
+    this.hourMileService.deleteEntry(entry);
+    this.dataSource.data = this.hourMileService.getData();
   }
 
   readData(event: any) {
@@ -80,7 +50,7 @@ export class AppComponent implements OnInit {
     fileReader.readAsText(event.target.files[0], "UTF-8");
     fileReader.onload = () => {
       if (typeof fileReader.result === 'string') {
-        this.dataSource.data = this.parseMilesAndHours(JSON.parse(fileReader.result));
+        this.hourMileService.setData(this.parseMilesAndHours(JSON.parse(fileReader.result)));
       }
     };
     fileReader.onerror = (error) => {
