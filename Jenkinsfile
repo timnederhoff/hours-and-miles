@@ -6,14 +6,17 @@ node('dockerhost') {
     checkout scm
   }
 
-  stage('install') {
-    docker.image('node:10.16.3').run('', 'npm install')
-  }
+  docker.image('node:10.16.3').inside {
+    withEnv(['npm_config_cache=npm-cache', 'HOME=.']) {
+      stage('install') {
+        sh 'npm install'
+      }
 
-  stage('build') {
-    docker.image('node:10.16.3').run('', 'npm build')
+      stage('build') {
+        sh 'npm build'
+      }
+    }
   }
-
 
   stage('containerize') {
     dockerImage = docker.build("hours-and-miles:$BUILD_NUMBER")
@@ -21,7 +24,7 @@ node('dockerhost') {
 
   stage('deploy') {
     def arguments = [
-      '-v ./dist/hours-and-miles:/usr/share.nginx/html',
+      '-v $PWD/dist/hours-and-miles:/usr/share.nginx/html',
       '-e VIRTUAL_HOST=hours-and-miles.dev.timnederhoff.nl',
       '-e LETSENCRYPT_HOST=hours-and-miles.dev.timnederhoff.nl',
       '--expose 80',
