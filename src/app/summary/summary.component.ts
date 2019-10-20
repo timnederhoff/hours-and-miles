@@ -9,6 +9,7 @@ import { Entry, HourMileService } from '../hour-mile.service';
 export class SummaryComponent {
 
   data: Entry[];
+  columsToDisplay = ['month', 'duration', 'distance'];
 
   constructor(private hourMileService: HourMileService) {
     this.data = this.hourMileService.getData();
@@ -16,14 +17,30 @@ export class SummaryComponent {
 
   getStats() {
     const reducer = (acc, cur) => {
-      acc[cur.date.getMonth()] = (acc[cur.date.getMonth()] || 0) + cur.duration;
+      const month = cur.date.getMonth();
+      if (!acc[month]) {
+        acc[month] = {
+          duration: 0,
+          distance: 0
+        } ;
+      }
+      acc[month] = {
+        duration: acc[month].duration + cur.duration,
+        distance: acc[month].distance + cur.distance
+      } ;
       return acc;
     };
     return this.data.reduce(reducer, {});
   }
 
-  getTotalDuration(): number {
-    return this.data.map(o => o.duration).reduce((a, c) => a + c, 0);
+  getTotals() {
+    const totals = this.data.reduce((a, c) => {
+      a.duration += c.duration;
+      a.distance += c.distance;
+      return a;
+    }, { duration: 0, distance: 0 });
+    console.log('totals:', totals)
+    return totals;
   }
 
 }
