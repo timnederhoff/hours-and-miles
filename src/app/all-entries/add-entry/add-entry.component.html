@@ -1,0 +1,35 @@
+<table class="mat-elevation-z8 new-entry">
+  <tr>
+    <td>
+      <mat-form-field class="entry-field">
+        <input matInput placeholder="Date" type="date" value="{{today | date:'yyyy-MM-dd'}}" #date>
+      </mat-form-field>
+    </td>
+    <td>
+      <mat-form-field class="entry-field">
+        <input matInput placeholder="Duration" type="number" value="9" #duration>
+      </mat-form-field>
+    </td>
+    <td>
+      <mat-form-field class="entry-field">
+        <input matInput placeholder="Category" type="text" value="Customer" #category>
+      </mat-form-field>
+    </td>
+    <td>
+      <mat-form-field class="entry-field">
+        <input matInput placeholder="Detail" type="text" value="German Railways" #detail>
+      </mat-form-field>
+    </td>
+    <td>
+      <mat-form-field class="entry-field">
+        <input matInput placeholder="Distance" type="number" value="42" #distance>
+      </mat-form-field>
+    </td>
+    <td>
+      <button
+        mat-raised-button
+        color="accent"
+        (click)="addEntry(date.valueAsDate, duration.valueAsNumber, category.value, detail.value, distance.valueAsNumber)">add</button>
+    </td>
+  </tr>
+</table>

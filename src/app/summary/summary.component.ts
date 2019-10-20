@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { Entry, HourMileService } from '../hour-mile.service';
 
 @Component({
   selector: 'app-summary',
@@ -7,18 +8,22 @@ import { Component, Input, OnInit } from '@angular/core';
 })
 export class SummaryComponent {
 
-  @Input() dataSource;
+  data: Entry[];
+
+  constructor(private hourMileService: HourMileService) {
+    this.data = this.hourMileService.getData();
+  }
 
   getStats() {
     const reducer = (acc, cur) => {
       acc[cur.date.getMonth()] = (acc[cur.date.getMonth()] || 0) + cur.duration;
       return acc;
     };
-    return this.dataSource.data.reduce(reducer, {});
+    return this.data.reduce(reducer, {});
   }
 
   getTotalDuration(): number {
-    return this.dataSource.data.map(o => o.duration).reduce((a, c) => a + c, 0);
+    return this.data.map(o => o.duration).reduce((a, c) => a + c, 0);
   }
 
 }

@@ -11,39 +11,9 @@ import { Entry, HourMileService } from './hour-mile.service';
   styleUrls: ['./app.component.css'],
   providers: [ CdkColumnDef ]
 })
-export class AppComponent implements OnInit {
-  @ViewChild(MatTable, {static: false}) table: MatTable<any>;
-  @ViewChild(MatSort, {static: true}) sort: MatSort;
-  dataSource: MatTableDataSource<Entry>;
-  displayedColumns: string[] = ['date', 'duration', 'category', 'detail', 'distance', 'controls'];
-  today = Date.now();
+export class AppComponent {
 
-  constructor(private sanitizer: DomSanitizer, private hourMileService: HourMileService) {
-    this.dataSource = new MatTableDataSource<Entry>(hourMileService.getData());
-  }
-
-  addEntry(date: Date, duration: number, category: string, detail: string, distance: number) {
-    this.hourMileService.addEntry({
-      date: date,
-      duration: duration,
-      category: category,
-      detail: detail,
-      distance: distance
-    });
-    this.dataSource.data = this.hourMileService.getData();
-    // to update table:
-    // this.dataSource.filter = '';
-  }
-
-  ngOnInit(): void {
-    this.sort.sort(<MatSortable>{id: 'date', start: 'asc'});
-    this.dataSource.sort = this.sort;
-  }
-
-  deleteRowData(entry: Entry){
-    this.hourMileService.deleteEntry(entry);
-    this.dataSource.data = this.hourMileService.getData();
-  }
+  constructor(private sanitizer: DomSanitizer, private hourMileService: HourMileService) { }
 
   readData(event: any) {
     const fileReader = new FileReader();

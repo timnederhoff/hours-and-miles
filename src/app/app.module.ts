@@ -13,12 +13,16 @@ import { FormsModule } from '@angular/forms';
 import { MatListModule } from '@angular/material/list';
 import { MonthnamePipe } from './monthname.pipe';
 import { SummaryComponent } from './summary/summary.component';
+import { AllEntriesComponent } from './all-entries/all-entries.component';
+import { AddEntryComponent } from './all-entries/add-entry/add-entry.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     MonthnamePipe,
-    SummaryComponent
+    SummaryComponent,
+    AllEntriesComponent,
+    AddEntryComponent
   ],
   imports: [
     BrowserModule,

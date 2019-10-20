@@ -2,24 +2,6 @@
   width: 30%;
 }
 
-table {
-  width: 90%;
-  margin: auto;
-  margin-bottom: 2em;
-}
-
-table.new-entry td:first-of-type {
-  padding-left: 24px;
-}
-
-table.new-entry td:last-of-type {
-  padding-right: 24px;
-}
-
-html, body {
-  height: 100%;
-}
-
 mat-sidenav-container {
   height: 100%;
 }
