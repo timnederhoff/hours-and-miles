@@ -24,7 +24,7 @@ node('dockerhost') {
 
   stage('deploy') {
     def arguments = [
-      '-v $PWD/dist/hours-and-miles:/usr/share.nginx/html',
+      '-v $PWD/dist/hours-and-miles:/usr/share/nginx/html',
       '-e VIRTUAL_HOST=hours-and-miles.dev.timnederhoff.nl',
       '-e LETSENCRYPT_HOST=hours-and-miles.dev.timnederhoff.nl',
       '--expose 80',
