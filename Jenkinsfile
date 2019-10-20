@@ -32,7 +32,8 @@ node('dockerhost') {
       '-e VIRTUAL_HOST=hours-and-miles.dev.timnederhoff.nl',
       '-e LETSENCRYPT_HOST=hours-and-miles.dev.timnederhoff.nl',
       '--expose 80',
-      '--rm'
+      '--rm',
+      '--restart=always'
     ].join(' ')
     dockerImage.run(arguments)
   }
