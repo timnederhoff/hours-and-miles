@@ -16,7 +16,7 @@ node('dockerhost') {
 
 
   stage('containerize') {
-    dockerImage = docker.build("hours-and-miles:$BUILD_NAME")
+    dockerImage = docker.build("hours-and-miles:$BUILD_NUMBER")
   }
 
   stage('deploy') {
