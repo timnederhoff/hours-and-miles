@@ -7,11 +7,11 @@ node('dockerhost') {
   }
 
   stage('install') {
-    docker.image('node:10.16.3').run('npm install')
+    docker.image('node:10.16.3').run('', 'npm install')
   }
 
   stage('build') {
-    docker.image('node:10.16.3').run('npm build')
+    docker.image('node:10.16.3').run('', 'npm build')
   }
 
 
