@@ -5,3 +5,8 @@ table.new-entry td:first-of-type {
 table.new-entry td:last-of-type {
   padding-right: 24px;
 }
+
+div.all-entries-container {
+  height: 300px;
+  overflow: auto;
+}
