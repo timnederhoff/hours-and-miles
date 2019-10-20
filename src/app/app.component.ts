@@ -106,16 +106,4 @@ export class AppComponent implements OnInit {
     const url = 'data:text/json;charset=utf-8,' + encodeURIComponent(JSON.stringify({greet: 'hi me!'}));
     return this.sanitizer.bypassSecurityTrustUrl(url);
   }
-
-  getStats() {
-    const reducer = (acc, cur) => {
-      acc[cur.date.getMonth()] = (acc[cur.date.getMonth()] || 0) + cur.duration;
-      return acc;
-    };
-    return this.dataSource.data.reduce(reducer, {});
-  }
-
-  getTotalDuration(): number {
-    return this.dataSource.data.map(o => o.duration).reduce((a, c) => a + c, 0);
-  }
 }

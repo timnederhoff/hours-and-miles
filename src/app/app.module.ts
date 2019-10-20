@@ -12,11 +12,13 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { FormsModule } from '@angular/forms';
 import { MatListModule } from '@angular/material/list';
 import { MonthnamePipe } from './monthname.pipe';
+import { SummaryComponent } from './summary/summary.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    MonthnamePipe
+    MonthnamePipe,
+    SummaryComponent
   ],
   imports: [
     BrowserModule,

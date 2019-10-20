@@ -23,7 +23,3 @@ html, body {
 mat-sidenav-container {
   height: 100%;
 }
-
-tr.mat-footer-row {
-  font-weight: bold;
-}
