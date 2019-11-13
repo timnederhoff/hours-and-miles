@@ -39,7 +39,6 @@ export class SummaryComponent {
       a.distance += c.distance;
       return a;
     }, { duration: 0, distance: 0 });
-    console.log('totals:', totals)
     return totals;
   }
 

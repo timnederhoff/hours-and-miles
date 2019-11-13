@@ -24,7 +24,7 @@ export class AppComponent {
       }
     };
     fileReader.onerror = (error) => {
-      console.log(error);
+      console.error(error);
     };
   }
 
